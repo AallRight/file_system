@@ -1,6 +1,10 @@
 #include "include/disk.hpp"
+#include "include/inode.hpp"
 using namespace disk;
 using namespace std;
+#define TEST_LOCK 1
+
+#if !TEST_LOCK
 int main(int argc, char *argv[]){
     map_diskfile();
     for(int i = 0; i < 10; i++){
@@ -22,5 +26,16 @@ int main(int argc, char *argv[]){
 
     }
     umap_diskfile();
+    return 0;
+}
+
+#endif
+
+int main(){
+    inode_namespace::inode_data data;
+    data.access_time = 0;
+    data.name_block_id = 0;
+    inode_namespace::Inode inode(data);
+    printf("inode data: %d %d\n", inode.data.access_time, inode.data.name_block_id);
     return 0;
 }

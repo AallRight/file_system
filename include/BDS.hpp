@@ -5,6 +5,7 @@ namespace bds{
     int open_BDS();
     int read_data(int cylindernum, int blocknum, char *data);
     int write_data(int cylindernum, int blocknum, char *data);
+    int data_operation(int operations_types, int cylinder_num, int sector_num, char *data);
     int close_BDS();
 }
 int bds::open_BDS(){
@@ -19,6 +20,14 @@ int bds::write_data(int cylindernum, int blocknum, char *data){
 }
 int bds::close_BDS(){
     return disk::umap_diskfile();
+}
+int data_operation(int operations_types, int cylinder_num, int sector_num, char *data){
+    if(operations_types == 0){
+        return bds::read_data(cylinder_num, sector_num, data);
+    }
+    else if(operations_types == 1){
+        return bds::write_data(cylinder_num, sector_num, data);
+    }
 }
 
 

@@ -7,9 +7,8 @@
 
 namespace inode_namespace
 {
-    class inode
+    typedef struct inode_data
     {
-    public:
         int16_t file_type; // 0: file, 1: directory
         int16_t user_id;
         int16_t group_id;
@@ -20,22 +19,19 @@ namespace inode_namespace
         int block_num_allocated;
         int name_block_id;
         int access_time;
-        inode(int16_t file_type) : file_type(file_type)
-        {
-            // file_type = 0;
-            // user_id = 0;
-            // group_id = 0;
-            // permission = 0;
-            // file_size = 0;
-            // inode_block_id = 0;
-            // parent_inode_block_id = 0;
-            // block_num_allocated = 0;
-            // name_block_id = 0;
-            // access_time = time(NULL);
-        }
+    }inode_data;
+    
 
-        virtual int get_block_id_by_index(int index) = 0;
-        virtual ~inode(){}
+    class Inode
+    {
+    public:
+        inode_data data;
+        Inode(inode_data data) : data(data)
+        {
+            
+        }
+        virtual int get_block_id_by_index(int index){}
+        virtual ~Inode(){}
     };
 
     typedef struct name_blcok
@@ -69,9 +65,12 @@ namespace inode_namespace
         int load_bitmap();
         int store_bitmap();
         int judge_bitmap();
+        int get_free_block();
     }
 
 }
+
+
 int inode_namespace::read_block(int block_id, char *data)
 {
     return bds::read_data(0, block_id, data);
