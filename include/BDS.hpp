@@ -1,7 +1,6 @@
 #ifndef BDS_HPP
 #define BDS_HPP
 #include "disk.hpp"
-
 namespace bds{
     int open_BDS();
     int read_data(int cylindernum, int blocknum, char *data);
